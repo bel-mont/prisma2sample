@@ -1,0 +1,1 @@
+Sample for Prisma2 setup
