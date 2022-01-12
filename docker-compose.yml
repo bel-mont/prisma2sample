@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  # ---------------- db container ---------------- #
+  db:
+    image: ggear-db:local
+    container_name: ggear-db
+    restart: always
+    build:
+      context: ./docker/db
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ggear
+      MYSQL_USER: ggear
+      MYSQL_PASSWORD: ggear
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
