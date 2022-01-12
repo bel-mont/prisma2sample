@@ -11,53 +11,73 @@ datasource db {
 }
 
 enum CharacterStyle {
-    RUSHDOWN
-    PUPPET
-    ZONER
-    GRAPPLER
+  RUSHDOWN
+  PUPPET
+  ZONER
+  GRAPPLER
 }
 
 model Character {
-    id Int @default(autoincrement()) @id
-    name String @unique
-    style CharacterStyle
-    moveset Move[]
-    stats CharacterStats?
-    skills CharacterSkill[]
+  id                    Int                     @id @default(autoincrement())
+  name                  String                  @unique
+  style                 CharacterStyle
+  moveset               Move[]
+  stats                 CharacterStats?
+  skills                CharacterSkill[]
+  CharacterSkillHistory CharacterSkillHistory[]
 }
 
 model CharacterStats {
-    character Character @relation(fields: [characterId], references: [id])
-    characterId Int @id
-    health Decimal
-    guts Decimal
-    walkSpeedForward Decimal
-    walkSpeedBackward Decimal
-    dashSpeed Decimal
+  character         Character @relation(fields: [characterId], references: [id])
+  characterId       Int       @id
+  health            Decimal
+  guts              Decimal
+  walkSpeedForward  Decimal
+  walkSpeedBackward Decimal
+  dashSpeed         Decimal
 }
 
 model Move {
-    id BigInt @default(autoincrement()) @id
-    name String
-    description String
-    character Character @relation(fields: [characterId], references: [id])
-    characterId Int
-    baseDamage Decimal
+  id          BigInt    @id @default(autoincrement())
+  name        String
+  description String
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  baseDamage  Decimal
 }
 
-
 model Skill {
-    id Int @id
-    name String
+  id                    Int                     @id
+  name                  String
+  CharacterSkill        CharacterSkill[]
+  CharacterSkillHistory CharacterSkillHistory[]
 }
 
 model CharacterSkill {
-    character Character @relation(fields: [characterId], references: [id])
-    characterId Int
-    skill Skill @relation(fields: [skillId], references: [id])
-    skillId Int
-    yearsOfExperience Int
-    notes String
-    @@id ([characterId, skillId])
+  character         Character @relation(fields: [characterId], references: [id])
+  characterId       Int
+  skill             Skill     @relation(fields: [skillId], references: [id])
+  skillId           Int
+  yearsOfExperience Int
+  notes             String
+
+  @@id([characterId, skillId])
 }
 
+enum SkillStatus {
+  ACTIVE
+  INACTIVE
+  ACUIRED
+  AUGMENTED
+}
+
+model CharacterSkillHistory {
+  character   Character   @relation(fields: [characterId], references: [id])
+  characterId Int
+  skill       Skill       @relation(fields: [skillId], references: [id])
+  skillId     Int
+  skillStatus SkillStatus
+  date        DateTime
+
+  @@id([characterId, skillId])
+}
