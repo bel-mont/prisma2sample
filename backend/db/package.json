@@ -1,10 +1,12 @@
 {
-  "name": "db",
+  "name": "@ggear/db",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc build",
@@ -15,12 +17,19 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:introspect": "dotenv -- prisma introspect",
+    "db:generate": "dotenv -- prisma generate",
+    "postinstall": "tsc && cp src/types/index.d.ts dist/index.d.ts && npx prisma@3.8.0 generate"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seeds/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^3.8.0"
   },
   "devDependencies": {
+    "dotenv-cli": "^4",
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",

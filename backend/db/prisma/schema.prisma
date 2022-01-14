@@ -10,13 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum CharacterStyle {
-  RUSHDOWN
-  PUPPET
-  ZONER
-  GRAPPLER
-}
-
 model Character {
   id                    Int                     @id @default(autoincrement())
   name                  String                  @unique
@@ -25,6 +18,13 @@ model Character {
   stats                 CharacterStats?
   skills                CharacterSkill[]
   CharacterSkillHistory CharacterSkillHistory[]
+}
+
+enum CharacterStyle {
+  RUSHDOWN
+  PUPPET
+  ZONER
+  GRAPPLER
 }
 
 model CharacterStats {
