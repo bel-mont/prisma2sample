@@ -47,7 +47,7 @@ model Move {
 }
 
 model Skill {
-  id                    Int                     @id
+  id                    Int                     @id @default(autoincrement())
   name                  String
   CharacterSkill        CharacterSkill[]
   CharacterSkillHistory CharacterSkillHistory[]

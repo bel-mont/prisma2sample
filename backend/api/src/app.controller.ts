@@ -1,4 +1,4 @@
-import {Controller, Delete, Get, Logger, Post} from '@nestjs/common';
+import {Controller, Delete, Logger, Post} from '@nestjs/common';
 import {AppService} from './app.service';
 import {PrismaService} from "./prisma.service";
 import {CharacterStyle} from '@ggear/db'

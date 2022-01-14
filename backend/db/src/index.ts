@@ -1,5 +1,5 @@
 import {PrismaClient} from "@prisma/client";
-import {Context} from "./types/index.d";
+import {Context} from "./types";
 
 const prisma = new PrismaClient();
 

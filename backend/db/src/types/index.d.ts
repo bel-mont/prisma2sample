@@ -12,7 +12,7 @@ export const enum CharacterStyle {
     PUPPET = 'PUPPET',
     ZONER = 'ZONER',
     GRAPPLER = 'GRAPPLER'
-};
+}
 
 export interface Context {
     prisma: PrismaClient;
